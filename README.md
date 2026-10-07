@@ -42,6 +42,18 @@ Detalhes do ambiente local:
 
 Esse comando só para o pod. Os volumes continuam intactos, e o próximo `scripts/up.sh` volta ao mesmo estado.
 
+## Visual
+
+O visual usa só recursos do tema:
+
+- a variação de estilo **Noon**, com corpo em peso 400 e mais espaço antes de cada subseção;
+- um template `page` com menos espaço vazio no topo;
+- colunas no Início e na Formação.
+
+Para reaplicar o visual:
+
+1. `scripts/apply-style.sh`
+
 ## Editar o conteúdo
 
 O fluxo recomendado mantém o Git como fonte:
@@ -98,7 +110,8 @@ em si foi feita assim:
 - comentários e pings desligados;
 - links permanentes em `/%postname%/`;
 - importação da foto, sem metadados, com `wp media import`;
-- `scripts/build-pages.sh`.
+- `scripts/build-pages.sh`;
+- `scripts/apply-style.sh`.
 
 O ID da foto, `5`, está fixo em `content/pages/01-inicio.html`. Numa reinstalação, confira o ID novo
 com `scripts/wp.sh post list --post_type=attachment`.
