@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# Aplica o visual: estilos globais (variação Noon do tema + ajustes) e o template "page"
-# com menos espaço vazio entre o cabeçalho e o título. Só recursos do próprio tema. Idempotente.
+# Aplica o visual: fontes locais na biblioteca de fontes, estilos globais com a identidade do
+# GABRIEL.SYS (cores e tipografia) e o template "page" com menos espaço vazio no topo.
+# Sem tema, plugin ou JavaScript novos. Idempotente.
 set -euo pipefail
 source "$(dirname "$0")/env.sh"
-export WP_EXTRA_MOUNT="-v $PROJECT_DIR/scripts:/scripts:ro,Z"
+export WP_EXTRA_MOUNT="-v $PROJECT_DIR/scripts:/scripts:ro,Z -v $PROJECT_DIR/assets/fonts:/fonts-src:ro,Z"
 wp() { "$PROJECT_DIR/scripts/wp.sh" "$@"; }
 
+wp eval-file /scripts/fonts.php
 wp eval-file /scripts/global-styles.php
 
 # Template "page" do tema com o topo reduzido (margem 60 -> 30 e padding 60 -> 40).

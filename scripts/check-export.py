@@ -19,6 +19,7 @@ class Collector(html.parser.HTMLParser):
     def __init__(self):
         super().__init__()
         self.urls, self.in_importmap, self.importmap = [], False, ""
+        self.in_style = False
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -28,12 +29,18 @@ class Collector(html.parser.HTMLParser):
         if a.get("srcset"):
             self.urls += [part.strip().split()[0] for part in a["srcset"].split(",") if part.strip()]
         self.in_importmap = tag == "script" and a.get("type") == "importmap"
+        self.in_style = tag == "style"
 
     def handle_data(self, data):
         if self.in_importmap:
             self.importmap += data
+        if self.in_style:  # @font-face e outros url() em <style> inline
+            data = re.sub(r"url\((\"data:[^\"]*\"|'data:[^']*')\)", "", data)  # SVG embutido tem url() interno
+            self.urls += [u for u in re.findall(r"url\(['\"]?([^'\")]+)", data) if not u.startswith("data:")]
 
     def handle_endtag(self, tag):
+        if tag == "style":
+            self.in_style = False
         if tag == "script" and self.in_importmap:
             self.urls += list(json.loads(self.importmap).get("imports", {}).values())
             self.in_importmap, self.importmap = False, ""

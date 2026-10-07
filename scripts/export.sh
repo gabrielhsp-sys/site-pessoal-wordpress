@@ -41,6 +41,10 @@ wp option get simply-static --format=json \
 rm -rf "$PROJECT_DIR/docs"
 cp -r "$PROJECT_DIR/export" "$PROJECT_DIR/docs"
 touch "$PROJECT_DIR/docs/.nojekyll"
+# As fontes são OFL-1.1: a licença acompanha os arquivos publicados.
+fonts_dir="$PROJECT_DIR/docs/wp-content/uploads/fonts"
+[ -d "$fonts_dir" ] || { echo "fontes ausentes no export: $fonts_dir" >&2; exit 1; }
+cp "$PROJECT_DIR"/assets/fonts/OFL-*.txt "$fonts_dir/"
 # Metadados que apontam para endpoints dinâmicos inexistentes no site estático.
 find "$PROJECT_DIR/docs" -name '*.html' -exec sed -i -E \
   -e 's#<link rel="EditURI"[^>]*>##' -e 's#<link rel="shortlink"[^>]*>##' {} +

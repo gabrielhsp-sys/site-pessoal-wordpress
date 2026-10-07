@@ -19,6 +19,7 @@ no GitHub Pages. O export é gerado pelo plugin Simply Static.
 | MariaDB | 11.8.9 | digest em `scripts/env.sh` |
 | Tema | Twenty Twenty-Five, o padrão do WordPress | — |
 | Plugin | Simply Static 3.8.16 | zip oficial conferido pelos checksums do wordpress.org |
+| Fontes | Bricolage Grotesque e IBM Plex Mono (`@fontsource` 5.3.0, OFL-1.1) | arquivos em `assets/fonts/` |
 | Idioma | pt_BR | — |
 
 Detalhes do ambiente local:
@@ -44,13 +45,30 @@ Esse comando só para o pod. Os volumes continuam intactos, e o próximo `script
 
 ## Visual
 
-O visual usa só recursos do tema:
+O visual segue a identidade do GABRIEL.SYS, tirada do `DESIGN.md` e do `app/globals.css` daquele repositório. Ele é aplicado só pelos estilos globais do WordPress, sem tema, plugin ou JavaScript novos.
 
-- a variação de estilo **Noon**, com corpo em peso 400 e mais espaço antes de cada subseção;
-- um template `page` com menos espaço vazio no topo;
-- colunas no Início e na Formação.
+- **Cores:**
+  - fundo preto quente `#0c0b0a`;
+  - títulos e links em marfim `#e9e0ca`;
+  - texto corrido em `#b8b09f`;
+  - navegação em `#9b9487`;
+  - hover, foco e seleção em âmbar `#f0ab3c`;
+  - sublinhado de link em `#9f6421`.
+- **Tipografia:**
+  - Bricolage Grotesque no corpo, com 16 px, e nos títulos;
+  - IBM Plex Mono na navegação, em caixa alta, e no nome do site.
+- **Fontes:** são arquivos locais em `assets/fonts/`, com licença OFL-1.1, registrados na biblioteca de fontes do WordPress e servidos em `wp-content/uploads/fonts/`. Nada vem de CDN, e as licenças OFL acompanham as fontes em `docs/`.
+- **Fundo:** grade de 40 px e ruído em SVG embutido, ambos só em CSS. O ruído não captura clique.
+- **Contraste no pior caso,** com grade e ruído: texto ≥ 6,06:1, e sublinhado e linhas ≥ 3,13:1.
+- **Alvos de toque:** navegação, nome do site e botão do menu têm pelo menos 44 px.
+- **Layout:**
+  - template `page` com menos espaço vazio no topo;
+  - mais espaço antes de cada subseção;
+  - colunas no Início e na Formação.
 
-Para reaplicar o visual:
+Não entram a animação de entrada, os sons, o Konami nem o terminal do GABRIEL.SYS.
+
+Para reaplicar o visual (fontes, estilos globais e template):
 
 1. `scripts/apply-style.sh`
 
