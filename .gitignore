@@ -1,0 +1,9 @@
+# Fora do Git: credenciais, dumps, volumes e exports temporarios
+.secrets/
+*.env
+.env*
+*.sql
+*.sql.gz
+volumes/
+export/
+tmp/
